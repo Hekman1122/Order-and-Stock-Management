@@ -9,6 +9,7 @@ import {
   getValueORder,
   stringToArray,
   orderMerge,
+  stockOrderMerge,
 } from "./helper";
 
 export async function updateAction(formData: FormData) {
@@ -63,7 +64,7 @@ export async function CreateOrderAction(formData: FormData) {
   const rewriteProducts = getRidOfZeroes(products);
   const truthyValue = JSON.stringify(rewriteProducts);
 
-  //新增訂單紀錄
+  // 新增訂單紀錄;
   await prisma.order.create({
     data: {
       orderNumber: orderNumber,
@@ -91,7 +92,6 @@ export async function CreateOrderAction(formData: FormData) {
         medium: medium,
       };
     }
-
     //修改庫存
     await prisma.stock.update({
       where: {
@@ -133,13 +133,17 @@ export async function completeAction(formData: FormData) {
       },
       select: {
         orderAmount: true,
+        stockAmount: true,
       },
     });
     //originalP 為一物件 用 originalP.orderAmount 取得原始物件當中的值
     // { orderAmount: { medium: 10, small: 12 } }
     if (originalP) {
       const newOrderStock = orderMerge(originalP.orderAmount, amountChange);
-
+      const newStockAmount = stockOrderMerge(
+        originalP.stockAmount,
+        amountChange
+      );
       // 訂單合併;
       await prisma.stock.update({
         where: {
@@ -147,6 +151,7 @@ export async function completeAction(formData: FormData) {
         },
         data: {
           orderAmount: newOrderStock,
+          stockAmount: newStockAmount,
         },
       });
     }
@@ -155,5 +160,3 @@ export async function completeAction(formData: FormData) {
   revalidatePath("/admin");
   redirect("/admin");
 }
-
-//首頁驗證

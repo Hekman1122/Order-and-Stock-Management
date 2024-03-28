@@ -16,7 +16,7 @@ export default async function Update() {
     "Yu-Mei",
     "Han-Wei",
   ];
-  const reasonArray = ["當天製作入庫", "前場販售需求", "出貨需求"];
+  const reasonArray = ["當天製作入庫", "前場販售需求", "出貨需求", "庫存修正"];
 
   const products: Stock[] = await prisma.stock.findMany({});
   return (
@@ -25,10 +25,11 @@ export default async function Update() {
         請輸入需要調整的數量
       </h2>
       <p className="text-sm font-semibold text-amber-700 mt-1 mb-6 ">
-        例如 : +24 或者 -10
+        <span className="my-1">例如 : 當天製作因此庫存增加輸入 +24</span> <br />
+        <span>或者 : 當天前場需求庫存減少輸入 -10</span>
       </p>
       <form className="flex flex-col gap-6" action={updateAction}>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-wrap gap-4 md:gap-0">
           <Select dataArray={userArray} title="資料輸入人" typeForData="user" />
           <Select
             dataArray={reasonArray}

@@ -282,7 +282,7 @@ type OrderType = {
   medium: number;
 };
 
-//合併兩個物件
+//合併兩個訂單物件
 export function orderMerge(
   originalOrderAmount: Partial<OrderType>,
   orderAmountChange: Partial<OrderType>
@@ -313,5 +313,41 @@ export function orderMerge(
       resultObj["medium"] = originalOrderAmount["medium"];
   }
 
+  return resultObj;
+}
+
+//合併庫存物件和訂單物件
+export function stockOrderMerge(
+  originalOrderAmount: productAmount,
+  orderAmountChange: Partial<OrderType>
+) {
+  const resultObj: productAmount = {
+    small: 0,
+    medium: 0,
+    large: 0,
+  };
+  // small
+  if (orderAmountChange["small"]) {
+    if (originalOrderAmount["small"]) {
+      resultObj["small"] =
+        originalOrderAmount["small"] - orderAmountChange["small"];
+    }
+  } else {
+    if (originalOrderAmount["small"])
+      resultObj["small"] = originalOrderAmount["small"];
+  }
+
+  //medium
+  if (orderAmountChange["medium"]) {
+    if (originalOrderAmount["medium"]) {
+      resultObj["medium"] =
+        originalOrderAmount["medium"] - orderAmountChange["medium"];
+    }
+  } else {
+    if (originalOrderAmount["medium"])
+      resultObj["medium"] = originalOrderAmount["medium"];
+  }
+  //large
+  resultObj["large"] = originalOrderAmount["large"];
   return resultObj;
 }

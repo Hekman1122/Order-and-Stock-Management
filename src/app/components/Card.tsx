@@ -3,10 +3,10 @@ export default function Card({ item }: { item: Stock }) {
   const { product, stockAmount, orderAmount } = item;
   return (
     <div className="w-full sm:w-64 border rounded-2xl px-4 py-5 flex flex-col gap-3">
-      <h2 className="text-2xl font-semibold text-orange-800 text-center">
+      <h2 className="text-2xl font-semibold text-orange-900 text-center">
         {product}
       </h2>
-      <p className="text-sm font-bold text-neutral-500">目前庫存</p>
+      <p className="text-sm font-bold text-orange-700">目前庫存</p>
       <ul className="flex flex-col gap-2">
         <li className="flex justify-between items-center ">
           <span>Small : </span>
@@ -21,7 +21,7 @@ export default function Card({ item }: { item: Stock }) {
           <span className="font-bold">{stockAmount.large}</span>
         </li>
       </ul>
-      <p className="text-sm font-bold text-neutral-500">訂單需求</p>
+      <p className="text-sm font-bold text-orange-700">訂單需求</p>
       <ul className="flex flex-col gap-2">
         <li className="flex justify-between items-center ">
           <span>Small : </span>

@@ -8,7 +8,7 @@ export default function VerifyCollection({ verify }: Props) {
   const [pass, setPass] = useState<string>("");
   const { pending } = useFormStatus();
   return (
-    <div className="flex justify-between items-center flex-wrap my-6">
+    <div className="flex justify-between items-center flex-wrap my-6 gap-4">
       <input
         type="text"
         placeholder="請輸入驗證碼"
